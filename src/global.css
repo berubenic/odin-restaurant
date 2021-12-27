@@ -8,7 +8,7 @@
 .nav-header {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
   margin-bottom: 1em;
@@ -36,8 +36,8 @@
 }
 
 .company-name {
-  padding: 0.5em;
   color: #ae2f35;
+  width: 50%;
 }
 
 .nav-icon {
