@@ -1,0 +1,46 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.nav-header {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.tab-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding-left: 0.2em;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tab-list > * {
+  margin-bottom: 1em;
+  padding: 0.4em;
+  border-radius: 2px;
+  width: 50%;
+  text-align: center;
+  background-color: #ae2f35;
+  color: white;
+}
+
+.company-name {
+  padding: 0.5em;
+  color: #ae2f35;
+}
+
+.nav-icon {
+  width: 128px;
+  padding: 0.5em;
+}

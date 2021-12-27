@@ -1,0 +1,22 @@
+.home-description-container {
+  text-align: center;
+}
+
+.home-description {
+  font-size: 18px;
+}
+
+.home-image {
+  width: 100%;
+}
+
+.home-address-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 1em;
+}
+
+.home-address-container > * {
+  margin: 0.5em;
+}

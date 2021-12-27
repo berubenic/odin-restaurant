@@ -1,11 +1,18 @@
 import { Home } from "./home";
 import { Menu } from "./menu";
+import { Nav } from "./nav";
+import "./global.css";
+import "./home.css";
+import "./menu.css";
 
 const container = document.getElementById("content");
+const navContainer = document.getElementById("nav");
 
+const nav = new Nav(navContainer);
 const home = new Home(container);
 const menu = new Menu(container);
 
+nav.display();
 home.display();
 
 function clearAndLoadHome() {
