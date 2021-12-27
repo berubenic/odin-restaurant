@@ -32,35 +32,39 @@ export class Menu {
     let header = document.createElement("h2");
     header.innerHTML = title;
     this.container.appendChild(header);
-    let list = document.createElement("div");
-    this.container.appendChild(list);
-    this.#addItemsToList(list);
+    let listContainer = document.createElement("div");
+    this.container.appendChild(listContainer);
+    this.#addItemsToList(listContainer);
   }
 
-  #addItemsToList(list) {
+  #addItemsToList(listContainer) {
     for (let [item, price] of Object.entries(this.entrees)) {
-      let innerList = document.createElement("ul");
-      list.appendChild(innerList);
-      let innerListItem = document.createElement("li");
-      innerList.appendChild(innerListItem);
-      innerListItem.innerHTML = item;
+      let list = document.createElement("ul");
+      listContainer.appendChild(list);
+      let listItem = document.createElement("li");
+      list.appendChild(listItem);
+      listItem.innerHTML = item;
       if (typeof price === "string") {
-        let innerListPrice = document.createElement("li");
-        innerList.appendChild(innerListPrice);
+        let listPrice = document.createElement("li");
+        list.appendChild(listPrice);
 
-        innerListPrice.innerHTML = price;
+        listPrice.innerHTML = price;
       } else {
-        for (let [option, secondPrice] of Object.entries(price)) {
-          let innerOptionList = document.createElement("ul");
-          innerList.appendChild(innerOptionList);
-          let optionListItem = document.createElement("li");
-          innerOptionList.appendChild(optionListItem);
-          optionListItem.innerHTML = option;
-          let optionListPrice = document.createElement("li");
-          innerOptionList.appendChild(optionListPrice);
-          optionListPrice.innerHTML = secondPrice;
+        for (let [option, optionPrice] of Object.entries(price)) {
+          this.#addOptionsToItem(option, optionPrice, listItem);
         }
       }
     }
+  }
+
+  #addOptionsToItem(option, optionPrice, listItem) {
+    let optionList = document.createElement("ul");
+    listItem.appendChild(optionList);
+    let optionListItem = document.createElement("li");
+    optionList.appendChild(optionListItem);
+    optionListItem.innerHTML = option;
+    let optionListPrice = document.createElement("li");
+    optionList.appendChild(optionListPrice);
+    optionListPrice.innerHTML = optionPrice;
   }
 }
