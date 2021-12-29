@@ -1,4 +1,4 @@
-import navIcon from "./rotisserie-la-victorienne-icon.svg";
+import navIcon from "./rotisserie-la-victorienne-icon.jpg";
 
 export class Nav {
   constructor(container) {

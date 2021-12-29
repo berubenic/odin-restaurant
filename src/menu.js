@@ -1,6 +1,7 @@
 export class Menu {
   constructor(container) {
     this.container = container;
+    this.menuContainer = document.createElement("div");
     this.menu = {
       Entrées: {
         Soupe: {
@@ -56,7 +57,7 @@ export class Menu {
           "1/2": "3,19",
         },
         "Pain à l'ail gratiné": {
-          prix: "7,29$",
+          prix: "7,29",
           "1/2": "4,29",
         },
         "Pelures de pommes de terre": {
@@ -103,7 +104,7 @@ export class Menu {
         description:
           "*Servi avec pain, sauce BBQ, salade de chou + choix d’accompagnement: riz (basmati, sauvage, maison) ou pommes de terre (four, purée, frites).",
         "Côtes levées régulières (environ 6 os)*": "17,69",
-        "Grandes côtes levées (environs 12 os)": "25,19",
+        "Grandes côtes levées (environ 12 os)*": "25,19",
       },
       Combos: {
         description:
@@ -217,7 +218,7 @@ export class Menu {
       Poisson: {
         description:
           "Servi avec riz ou pommes de terre ainsi que des légumes, du citron et notre sauce tartare maison (excepté pour les brochettes)",
-        "Fish ansd chips": {
+        "Fish and chips": {
           description: "Aiglefin",
           "(1)": "11,59",
           "(2)": "14,99",
@@ -358,44 +359,115 @@ export class Menu {
   }
 
   display() {
-    this.#createTitle();
     this.#createMenu();
+    this.#createMenuNav();
   }
 
   #createTitle() {
     let title = "Menu";
     let header = document.createElement("h1");
+    header.classList.add("menu-title");
     header.innerHTML = title;
-    this.container.appendChild(header);
+    this.menuContainer.appendChild(header);
   }
 
   #createMenu() {
+    this.container.appendChild(this.menuContainer);
+    this.menuContainer.classList.add("menu-container");
+    this.#createTitle();
     this.#createCategory(this.menu);
+  }
+
+  #createMenuNav() {
+    let followDiv = document.createElement("div");
+    followDiv.classList.add("menu-follow-container");
+    this.container.prepend(followDiv);
+    let navDiv = document.createElement("div");
+    navDiv.classList.add("menu-nav-container");
+    navDiv.classList.add("hidden");
+    followDiv.prepend(navDiv);
+    let navList = document.createElement("ul");
+    navList.classList.add("menu-nav-list");
+    navDiv.appendChild(navList);
+    this.#addMenuCategoriesToList(navList);
+    this.#addToggleButtonToMenuNav(followDiv);
+  }
+
+  #addToggleButtonToMenuNav(followDiv) {
+    let navButton = document.createElement("button");
+    navButton.setAttribute("type", "button");
+    navButton.setAttribute("value", "off");
+    navButton.innerHTML = `Menu \xa0\xa0\u25B6`;
+    navButton.classList.add("menu-toggle-btn");
+    navButton.addEventListener("click", this.#toggleMenuNav);
+    followDiv.prepend(navButton);
+  }
+
+  #toggleMenuNav() {
+    let navDiv = document.getElementsByClassName("menu-nav-container")[0];
+    navDiv.classList.toggle("hidden");
+    let navContainer = document.getElementById("nav");
+    navContainer.classList.toggle("dimmed");
+    let navButton = document.getElementsByClassName("menu-toggle-btn")[0];
+    toggleMenuNavButtonValue(navButton);
+    let menuContainer = document.getElementsByClassName("menu-container")[0];
+    menuContainer.classList.toggle("dimmed");
+    function toggleMenuNavButtonValue(navButton) {
+      if (navButton.value === "on") {
+        navButton.value = "off";
+        navButton.innerHTML = `Menu \xa0\xa0\u25B6`;
+      } else {
+        navButton.value = "on";
+        navButton.innerHTML = `Menu \xa0\xa0\u25BC`;
+      }
+    }
+  }
+
+  #addMenuCategoriesToList(navList) {
+    for (let [categoryName, items] of Object.entries(this.menu)) {
+      let listElement = document.createElement("li");
+      listElement.classList.add("menu-nav-item");
+      navList.appendChild(listElement);
+      this.#createAnchorTagForCategory(listElement, categoryName);
+    }
+  }
+
+  #createAnchorTagForCategory(listElement, categoryName) {
+    let tag = document.createElement("a");
+    tag.innerHTML = categoryName;
+    tag.setAttribute("href", `#${categoryName}`);
+    tag.classList.add("menu-nav-link");
+    tag.addEventListener("click", this.#toggleMenuNav);
+    listElement.appendChild(tag);
   }
 
   #createCategory(category, isSub = false) {
     for (let [categoryName, items] of Object.entries(category)) {
-      this.#createCategoryHeader(categoryName, isSub);
-      let listContainer = this.#createCategoryListContainer();
+      let categoryContainer = document.createElement("div");
+      this.menuContainer.appendChild(categoryContainer);
+      categoryContainer.classList.add("menu-category-container");
+      this.#createCategoryHeader(categoryName, isSub, categoryContainer);
+      let listContainer = this.#createCategoryListContainer(categoryContainer);
       this.#addItemsToList(listContainer, items);
     }
   }
 
-  #createCategoryHeader(title, isSub) {
+  #createCategoryHeader(title, isSub, categoryContainer) {
     let header = document.createElement("h2");
     header.classList.add("menu-category-header");
+    header.setAttribute("id", title);
     if (isSub) {
       header = document.createElement("h3");
       header.classList.add("menu-sub-category-header");
     }
     header.innerHTML = title;
-    this.container.appendChild(header);
+    categoryContainer.appendChild(header);
   }
 
-  #createCategoryListContainer() {
+  #createCategoryListContainer(categoryContainer) {
     let listContainer = document.createElement("div");
     listContainer.classList.add("menu-list-container");
-    this.container.appendChild(listContainer);
+    categoryContainer.appendChild(listContainer);
     return listContainer;
   }
 
@@ -403,7 +475,6 @@ export class Menu {
     for (let [item, price] of Object.entries(items)) {
       if (item === "subCategories") {
         this.#createCategory(items.subCategories, true);
-        console.log(items.subCategories);
       } else if (item === "description") {
         let subCategoryDescriptionP = document.createElement("p");
         subCategoryDescriptionP.classList.add("menu-sub-category-description");

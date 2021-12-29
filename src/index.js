@@ -9,18 +9,19 @@ const container = document.getElementById("content");
 const navContainer = document.getElementById("nav");
 
 const nav = new Nav(navContainer);
-const home = new Home(container);
-const menu = new Menu(container);
+let home = new Home(container);
 
 nav.display();
 home.display();
 
 function clearAndLoadHome() {
+  let home = new Home(container);
   clearContainer();
   home.display();
 }
 
 function clearAndLoadMenu() {
+  let menu = new Menu(container);
   clearContainer();
   menu.display();
 }
@@ -30,6 +31,7 @@ function clearAndLoadContact() {
 }
 
 function clearContainer() {
+  let container = document.getElementById("content");
   container.innerHTML = "";
 }
 

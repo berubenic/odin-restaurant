@@ -1,14 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Raleway:wght@100;300;400;500;600;700&display=swap");
+
+body {
+  font-family: "Raleway", sans-serif;
+  background-color: #aa0032;
+  margin: 0.5em 0 0 0;
+}
 .nav {
   display: flex;
   flex-direction: column;
-
   width: 100%;
+  margin-bottom: 0em;
+  padding-bottom: 1em;
+  background-color: white;
 }
 
 .nav-header {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 100%;
   margin-bottom: 1em;
@@ -20,7 +29,7 @@
   justify-content: center;
   align-items: center;
   list-style: none;
-  padding-left: 0.2em;
+  padding-left: 0;
   margin: 0 auto;
   width: 100%;
 }
@@ -31,16 +40,40 @@
   border-radius: 2px;
   width: 50%;
   text-align: center;
-  background-color: #ae2f35;
+  background-color: #aa0032;
   color: white;
+  font-weight: 500;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.171);
+}
+
+.tab-list > *:hover {
+  background-color: #cf0340;
+  transform: scale(1.05);
 }
 
 .company-name {
-  color: #ae2f35;
-  width: 50%;
+  color: #aa0032;
+  text-align: center;
 }
 
 .nav-icon {
-  width: 128px;
+  width: auto;
+  max-width: 100%;
   padding: 0.5em;
+}
+
+@media only screen and (min-width: 1050px) {
+  .nav {
+    width: 1050px;
+    margin: 0 auto;
+  }
+  .tab-list {
+    flex-direction: row;
+  }
+
+  .tab-list > * {
+    width: 12%;
+    margin: 0 1em 0.4em 1em;
+  }
 }

@@ -3,9 +3,12 @@ import frontViewImage from "./rotisserie-la-victorienne.jpg";
 export class Home {
   constructor(container) {
     this.container = container;
+    this.homeContainer = document.createElement("div");
   }
 
   display() {
+    this.container.appendChild(this.homeContainer);
+    this.homeContainer.classList.add("home-container");
     this.#createDescription();
     this.#createImage();
     this.#addAddress();
@@ -13,7 +16,7 @@ export class Home {
 
   #createDescription() {
     let descriptionContainer = document.createElement("div");
-    this.container.appendChild(descriptionContainer);
+    this.homeContainer.appendChild(descriptionContainer);
     descriptionContainer.classList.add("home-description-container");
     let topDescription = "Bien plus qu'une Rôtisserie!";
     let bottomDescription = " Au plaisir de vous servir!";
@@ -31,13 +34,13 @@ export class Home {
     let image = new Image();
     image.src = frontViewImage;
     image.classList.add("home-image");
-    this.container.appendChild(image);
+    this.homeContainer.appendChild(image);
   }
 
   #addAddress() {
     let addressContainer = document.createElement("div");
     addressContainer.classList.add("home-address-container");
-    this.container.appendChild(addressContainer);
+    this.homeContainer.appendChild(addressContainer);
 
     let firstLine = "1231 Notre-Dame";
     let secondLine = "Lavaltrie, QC J5T 1R7";
