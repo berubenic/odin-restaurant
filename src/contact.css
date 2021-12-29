@@ -1,4 +1,55 @@
 #map {
   height: 400px;
   width: 80%;
+  border: 1px solid rgba(0, 0, 0, 0.248);
+  margin: 0 auto;
+  margin-bottom: 1em;
+}
+
+.contact-container {
+  background-color: white;
+  text-align: center;
+  width: 1050px;
+}
+
+.logo {
+  width: 64px;
+  margin: 1em;
+  display: block;
+}
+
+.contact-social-container {
+  display: flex;
+  justify-content: center;
+}
+
+.contact-hours-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-right: 2em;
+}
+
+.contact-hours-day-list {
+  list-style: none;
+  font-weight: 500;
+}
+
+.contact-hours-hours-list {
+  list-style: none;
+}
+
+.contact-email {
+  font-weight: 600;
+}
+
+.contact-address-container {
+  margin: 1em;
+  font-style: italic;
+}
+
+@media only screen and (min-width: 1690px) {
+  #map {
+    width: 50%;
+  }
 }

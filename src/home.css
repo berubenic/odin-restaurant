@@ -12,7 +12,10 @@
 }
 
 .home-image {
+  display: block;
   width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .home-address-container {
@@ -26,7 +29,7 @@
   margin: 0.5em;
 }
 
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 1690px) {
   .home-image {
     display: block;
     width: auto;
