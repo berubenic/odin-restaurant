@@ -1,9 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Raleway:wght@100;300;400;500;600;700&display=swap");
 
+:root {
+  --red: #aa0032;
+  --hover-red: #d50040;
+  --blue: #003b72;
+  --yellow: #f6b349;
+  --border-gray: #003b7217;
+}
+
 body {
   font-family: "Raleway", sans-serif;
-  background-color: #aa0032;
-  margin: 0.5em 0 1em 0;
+  background-color: var(--red);
+  max-width: 100%;
+  margin: 0;
 }
 .nav {
   display: flex;
@@ -17,10 +26,9 @@ body {
 .nav-header {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  width: 100%;
-  margin-bottom: 1em;
+  margin: 1em;
 }
 
 .tab-list {
@@ -40,40 +48,57 @@ body {
   border-radius: 2px;
   width: 50%;
   text-align: center;
-  background-color: #aa0032;
+  background-color: var(--red);
   color: white;
   font-weight: 500;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border: 1px solid rgba(0, 0, 0, 0.171);
+  border: 1px solid --border-gray;
 }
 
 .tab-list > *:hover {
-  background-color: #cf0340;
+  background-color: var(--hover-red);
   transform: scale(1.05);
 }
 
 .company-name {
-  color: #aa0032;
+  color: var(--red);
   text-align: center;
 }
 
 .nav-icon {
   width: auto;
   max-width: 100%;
-  padding: 0.5em;
+}
+
+footer {
+  width: 100%;
+  background-color: var(--red);
+  height: 1vh;
+  text-align: end;
 }
 
 @media only screen and (min-width: 1690px) {
   .nav {
-    width: 1050px;
+    width: 60%;
     margin: 0 auto;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .nav-header {
+    margin: 0;
+    width: 45%;
   }
   .tab-list {
     flex-direction: row;
+    width: 55%;
+    margin: 0;
+    justify-content: space-evenly;
   }
 
   .tab-list > * {
-    width: 12%;
-    margin: 0 1em 0.4em 1em;
+    width: max-content;
+    padding: 0.5em 1em;
+    margin: 0;
   }
 }
