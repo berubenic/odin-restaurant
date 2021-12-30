@@ -1,5 +1,6 @@
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
+const webpack = require("webpack");
 
 module.exports = {
   mode: "production",
@@ -30,5 +31,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [new Dotenv()],
+  plugins: [new Dotenv(), new webpack.EnvironmentPlugin(["GOOGLE_API_KEY"])],
 };
