@@ -1,10 +1,9 @@
 .home-container {
-  background-color: white;
-  padding: 1em;
 }
 
-.home-description-container {
+.home-header-container {
   text-align: center;
+  margin-bottom: 1.7em;
 }
 
 .home-description {
@@ -16,17 +15,16 @@
   width: 100%;
   max-width: 960px;
   margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.24);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.home-address-container {
-  display: flex;
-  flex-direction: column;
+.home-delivery-message-container {
+  display: block;
   text-align: center;
-  margin: 1em;
-}
-
-.home-address-container > * {
-  margin: 0.5em;
+  margin: 0 auto;
+  color: var(--blue);
+  font-weight: 600;
 }
 
 @media only screen and (min-width: 1690px) {

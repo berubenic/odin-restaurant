@@ -161,7 +161,6 @@
     display: flex;
     align-content: center;
     flex-direction: column;
-    background-color: white;
     width: 1050px;
   }
 
@@ -170,7 +169,7 @@
   }
 
   .menu-nav-container {
-    background-color: #aa0032;
+    background-color: var(--red);
     width: auto;
     left: 0;
   }

@@ -23,22 +23,6 @@
   justify-content: center;
 }
 
-.contact-hours-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-right: 2em;
-}
-
-.contact-hours-day-list {
-  list-style: none;
-  font-weight: 500;
-}
-
-.contact-hours-hours-list {
-  list-style: none;
-}
-
 .contact-email {
   font-weight: 600;
 }

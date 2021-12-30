@@ -13,16 +13,16 @@ export class Schedule {
 
   createSchedule(classContainer) {
     let scheduleContainer = document.createElement("div");
-    scheduleContainer.classList.add("contact-schedule-container");
+    scheduleContainer.classList.add("global-schedule-container");
     classContainer.appendChild(scheduleContainer);
     // week days
     let weekDaysList = document.createElement("ul");
     scheduleContainer.appendChild(weekDaysList);
-    weekDaysList.classList.add("contact-schedule-week-days-list");
+    weekDaysList.classList.add("global-schedule-week-days-list");
     // opening and closing time
     let timeList = document.createElement("ul");
     scheduleContainer.appendChild(timeList);
-    timeList.classList.add("contact-schedule-time-list");
+    timeList.classList.add("global-schedule-time-list");
     // insert each day and time from schedule in respective list
     for (let [weekDay, time] of Object.entries(this.schedule)) {
       // day

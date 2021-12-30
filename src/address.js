@@ -9,14 +9,14 @@ export class Address {
 
   createAddress(classContainer) {
     let addressContainer = document.createElement("div");
-    addressContainer.classList.add("home-address-container");
+    addressContainer.classList.add("global-address-container");
     classContainer.appendChild(addressContainer);
 
-    // insert each line of address as p tag in container
+    // insert each line of address as span tag in container
     Object.entries(this.address).forEach(([key, value]) => {
-      let paragraph = document.createElement("p");
-      paragraph.innerHTML = value;
-      addressContainer.appendChild(paragraph);
+      let span = document.createElement("span");
+      span.innerHTML = value;
+      addressContainer.appendChild(span);
     });
   }
 }

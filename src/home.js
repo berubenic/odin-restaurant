@@ -16,6 +16,7 @@ export class Home {
     this.#createHeaders();
     this.#createImage();
     schedule.createSchedule(this.homeContainer);
+    this.#createDeliveryMessage();
     address.createAddress(this.homeContainer);
   }
 
@@ -48,5 +49,14 @@ export class Home {
     image.src = frontViewImage;
     image.classList.add("home-image");
     this.homeContainer.appendChild(image);
+  }
+
+  #createDeliveryMessage() {
+    let messageContainer = document.createElement("span");
+    messageContainer.classList.add("home-delivery-message-container");
+    this.homeContainer.appendChild(messageContainer);
+
+    let text = "Commandez par téléphone ou au comptoir.";
+    messageContainer.innerText = text;
   }
 }
