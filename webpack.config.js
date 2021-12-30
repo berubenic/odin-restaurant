@@ -2,7 +2,7 @@ const path = require("path");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: "./src/index.js",
   output: {
     filename: "main.js",
@@ -11,7 +11,6 @@ module.exports = {
   devServer: {
     static: "./dist",
   },
-  devtool: "inline-source-map",
   module: {
     rules: [
       {
@@ -19,9 +18,15 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-
-        type: "asset/resource",
+        test: /\.(png|svg|jpg|jpeg|gif|pdf)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+            },
+          },
+        ],
       },
     ],
   },

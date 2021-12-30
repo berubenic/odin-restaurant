@@ -43,7 +43,7 @@ export class Contact {
   }
 
   #createEmail() {
-    let emailSpan = document.createElement("span");
+    let emailSpan = document.createElement("a");
     emailSpan.classList.add("contact-email");
     emailSpan.setAttribute("href", "mailto:info@lavictorienne.ca");
     let email = "info@lavictorienne.ca";

@@ -19,6 +19,20 @@
   color: var(--blue);
 }
 
+.menu-download-link {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--blue);
+}
+
+.menu-return-top-link {
+  display: block;
+  margin: 1em auto;
+  text-align: center;
+  color: var(--blue);
+}
+
 .menu-delivery-number {
   font-family: "Lato", sans-serif;
   font-weight: 700;
@@ -46,6 +60,10 @@
   font-weight: 500;
   opacity: 0.7;
   padding: 0.5em 0;
+}
+
+.menu-nav-container-toggle-btn:hover {
+  cursor: pointer;
 }
 
 .menu-nav-list {
@@ -163,6 +181,7 @@
 @media only screen and (min-width: 1690px) {
   .menu-nav-container-toggle-btn {
     margin-right: 1em;
+    width: 15%;
   }
 
   .menu-category-header {

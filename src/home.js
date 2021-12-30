@@ -1,4 +1,6 @@
 import frontViewImage from "./rotisserie-la-victorienne.jpg";
+import awardOne from "./prix1-rotisserie-la-victorienne.jpg";
+import awardTwo from "./prix2-rotisserie-la-victorienne.jpg";
 import { Schedule } from "./schedule";
 import { Address } from "./address";
 
@@ -15,6 +17,7 @@ export class Home {
     this.#createHomeContainer();
     this.#createHeaders();
     this.#createImage();
+    this.#createAwards();
     schedule.createSchedule(this.homeContainer);
     this.#createDeliveryMessage();
     address.createAddress(this.homeContainer);
@@ -49,6 +52,26 @@ export class Home {
     image.src = frontViewImage;
     image.classList.add("home-image");
     this.homeContainer.appendChild(image);
+  }
+
+  #createAwards() {
+    // container
+    let awardContainer = document.createElement("div");
+    awardContainer.classList.add("home-award-container");
+    this.homeContainer.appendChild(awardContainer);
+
+    let imageOne = document.createElement("img");
+    imageOne.src = awardOne;
+    imageOne.classList.add("home-award-one");
+    imageOne.classList.add("home-award-image");
+
+    awardContainer.appendChild(imageOne);
+
+    let imageTwo = document.createElement("img");
+    imageTwo.src = awardTwo;
+    imageTwo.classList.add("home-award-two");
+    imageTwo.classList.add("home-award-image");
+    awardContainer.appendChild(imageTwo);
   }
 
   #createDeliveryMessage() {

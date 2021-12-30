@@ -1,3 +1,5 @@
+import PDFMenu from "./menu-rotisserie-la-victorienne.pdf";
+
 export class Menu {
   constructor(container) {
     this.container = container;
@@ -422,6 +424,7 @@ export class Menu {
     this.#createMenuContainer();
     this.#createMenu();
     this.#createMenuNav();
+    this.#createReturnToTopLink();
   }
 
   #createMenuContainer() {
@@ -440,6 +443,13 @@ export class Menu {
     firstHeader.classList.add("menu-title");
     firstHeader.innerHTML = menuHeaderText;
     this.menuContainer.appendChild(firstHeader);
+
+    let downloadLink = document.createElement("a");
+    downloadLink.setAttribute("href", PDFMenu);
+    downloadLink.setAttribute("download", "menu-rotisserie-la-victorienne");
+    downloadLink.innerHTML = "Téléchargez le menu içi \u21D3";
+    downloadLink.classList.add("menu-download-link");
+    this.menuContainer.appendChild(downloadLink);
 
     let deliveryMessage = "Commandez par téléphone ou au comptoir.";
     let phoneNumber = "450-586-1337";
@@ -527,7 +537,6 @@ export class Menu {
       let distance_from_top = document.body.scrollTop;
 
       // The user has scrolled to the tippy top of the page. Set appropriate style.
-      console.log(distance_from_top);
       if (distance_from_top === 0) {
         navDiv.classList.add("sticky");
       }
@@ -649,5 +658,13 @@ export class Menu {
     optionListPrice.classList.add("menu-option-price");
     optionListPrice.innerHTML = optionPrice;
     optionList.appendChild(optionListPrice);
+  }
+
+  #createReturnToTopLink() {
+    let link = document.createElement("a");
+    link.setAttribute("href", "#Entrées");
+    link.classList.add("menu-return-top-link");
+    link.innerHTML = "Haut de la page \u2191";
+    this.menuContainer.appendChild(link);
   }
 }

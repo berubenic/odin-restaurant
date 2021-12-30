@@ -58,6 +58,7 @@ body {
 .tab-list > *:hover {
   background-color: var(--hover-red);
   transform: scale(1.05);
+  cursor: pointer;
 }
 
 .company-name {
