@@ -124,19 +124,19 @@ export class Menu {
           "Veuillez noter qu’il y a un délai d’attente supplémentaire de 30 minutes pour la cuisson du poulet frit.",
         "Avec accompagnement (sauces, frites, salade de chou et pain)": {
           description: "*viande blanche",
-          "2 mcx": "10,89 ou 13,59*",
-          "3 mcx": "13,09 ou 26,39*",
-          "4 mcx": "14,99 ou 17,69*",
-          "5 mcx": "16,59 ou 19,99*",
-          "10 mcx": "37,29 ou 52,39*",
-          "15 mcx": "43,79 ou 52,39*",
-          "20 mcx": "52,69 ou 62,99*",
+          "2 mcx": "10,89 <b>ou</b> 13,59*",
+          "3 mcx": "13,09 <b>ou</b> 26,39*",
+          "4 mcx": "14,99 <b>ou</b> 17,69*",
+          "5 mcx": "16,59 <b>ou</b> 19,99*",
+          "10 mcx": "37,29 <b>ou</b> 52,39*",
+          "15 mcx": "43,79 <b>ou</b> 52,39*",
+          "20 mcx": "52,69 <b>ou</b> 62,99*",
         },
         "Sans accompagnement": {
           description: "*viande blanche",
-          "10 mcx": "25,29 ou 31,09*",
-          "15 mcx": "31,89 ou 40,29*",
-          "20 mcx": "38,79 ou 49,49*",
+          "10 mcx": "25,29 <b>ou</b> 31,09*",
+          "15 mcx": "31,89 <b>ou</b> 40,29*",
+          "20 mcx": "38,79 <b>ou</b> 49,49*",
         },
       },
       Poulet: {
@@ -352,9 +352,69 @@ export class Menu {
           },
         },
       },
-      Desserts: {},
-      "Casse-croûte": {},
-      "Prix de groupe": {},
+      Desserts: {
+        "Assortiment de tartes et de gâteaux sur demande": "",
+      },
+      "Casse-croûte": {
+        Frites: {
+          Petit: "2,89",
+          Moyen: "3,89",
+          Grand: "6,09",
+          Familial: "8,19",
+        },
+        "Patates frites douces extra": "1,19",
+        "Patates grecques extra": "1,19",
+        subCategories: {
+          Poutine: {
+            Régulière: {
+              Régulier: "9,99",
+              Grand: "11,99",
+            },
+            "Au poulet(viande blanche extra 1,60)": {
+              Régulier: "10,99",
+              Grand: "12,99",
+            },
+            Italienne: {
+              Régulier: "10,99",
+              Grand: "13,29",
+            },
+            "Vol-au-vent": {
+              Régulier: "12,99",
+              Grand: "15,29",
+            },
+            Poivre: {
+              Régulier: "10,99",
+              Grand: "13,29",
+            },
+            "Poulet popcorn": {
+              Régulier: "11,99",
+              Grand: "14,29",
+            },
+            Bacon: {
+              Régulier: "10,99",
+              Grand: "14,09",
+            },
+            Texas: {
+              description:
+                "Sauce BBQ, sauce hot chicken, sauce buffalo, filets de poitrine panés et échalotes.",
+              Régulier: "13,99",
+              Grand: "16,29",
+            },
+          },
+        },
+        "Poulet popcorn": {
+          Régulier: "7,19",
+          Grand: "13,39",
+          Familial: "20,79",
+        },
+      },
+      "Prix de groupe": {
+        description: "Repas choix du chef par pseronne*",
+        "12 à 25 pers.": "8,39",
+        "26 à 50 pers.": "8,19",
+        "51 à 100 pers.": "7,79",
+        "100 pers. et +": "7,39",
+      },
     };
   }
 
@@ -380,6 +440,18 @@ export class Menu {
     firstHeader.classList.add("menu-title");
     firstHeader.innerHTML = menuHeaderText;
     this.menuContainer.appendChild(firstHeader);
+
+    let deliveryMessage = "Commandez par téléphone ou au comptoir.";
+    let phoneNumber = "450-586-1337";
+    let secondHeader = document.createElement("h2");
+    secondHeader.classList.add("menu-delivery-message");
+    secondHeader.innerHTML = deliveryMessage;
+    this.menuContainer.appendChild(secondHeader);
+
+    let thirdHeader = document.createElement("h3");
+    thirdHeader.classList.add("menu-delivery-number");
+    thirdHeader.innerHTML = phoneNumber;
+    this.menuContainer.appendChild(thirdHeader);
   }
 
   #createMenuNav() {
@@ -395,6 +467,7 @@ export class Menu {
 
     this.#addMenuCategoriesToList(navList);
     this.#addToggleButtonToMenuNavContainer(navDiv);
+    this.#createScrollListener(navDiv);
   }
 
   #addMenuCategoriesToList(navList) {
@@ -408,6 +481,7 @@ export class Menu {
       link.classList.add("menu-nav-list-link");
       link.innerHTML = categoryName;
       link.setAttribute("href", `#${categoryName}`);
+      link.addEventListener("click", this.#toggleMenuNavContainer);
       listElement.appendChild(link);
     }
   }
@@ -416,7 +490,7 @@ export class Menu {
     let navButton = document.createElement("button");
     navButton.setAttribute("type", "button");
     navButton.setAttribute("id", "menu_nav_btn");
-    navButton.innerHTML = `Menu \xa0\xa0\u25B6`;
+    navButton.innerHTML = `\u25BC Catégories `;
     navButton.classList.add("menu-nav-container-toggle-btn");
     navDiv.prepend(navButton);
     // Event Listener
@@ -430,17 +504,39 @@ export class Menu {
     // toggle menu and main nav with dimmed
     let mainNavContainer = document.getElementById("nav");
     mainNavContainer.classList.toggle("dimmed");
-    let menuContainer = document.getElementsByClassName("menu-container")[0];
-    menuContainer.classList.toggle("dimmed");
+    let menuCategoryContainers = document.getElementsByClassName(
+      "menu-category-container"
+    );
+    for (let index = 0; index < menuCategoryContainers.length; index++) {
+      menuCategoryContainers[index].classList.toggle("dimmed");
+    }
     // toggle button arrow
     (function toggleMenuNavButton() {
       let menuNavButton = document.getElementById("menu_nav_btn");
       if (navList.classList.contains("visible")) {
-        menuNavButton.innerHTML = `Menu \xa0\xa0\u25BC`;
+        menuNavButton.innerHTML = `\u25B2  Catégories`;
       } else {
-        menuNavButton.innerHTML = `Menu \xa0\xa0\u25B6`;
+        menuNavButton.innerHTML = `\u25BC Catégories `;
       }
     })();
+  }
+
+  #createScrollListener(navDiv) {
+    window.addEventListener("scroll", function (evt) {
+      // This value is your scroll distance from the top
+      let distance_from_top = document.body.scrollTop;
+
+      // The user has scrolled to the tippy top of the page. Set appropriate style.
+      console.log(distance_from_top);
+      if (distance_from_top === 0) {
+        navDiv.classList.add("sticky");
+      }
+
+      // The user has scrolled down the page.
+      if (distance_from_top > 0) {
+        navDiv.classList.remove("sticky");
+      }
+    });
   }
 
   #createCategory(category, isSubCategory = false) {
