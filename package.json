@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm install webpack serve --open",
-    "startProd": "npx webpack build --config ./webpack-production.config.js"
+    "startProd": "npx webpack build --config ./webpack.production.config.js --stats verbose"
   },
   "repository": {
     "type": "git",
