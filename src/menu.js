@@ -359,112 +359,128 @@ export class Menu {
   }
 
   display() {
+    this.#createMenuContainer();
     this.#createMenu();
     this.#createMenuNav();
   }
 
-  #createTitle() {
-    let title = "Menu";
-    let header = document.createElement("h1");
-    header.classList.add("menu-title");
-    header.innerHTML = title;
-    this.menuContainer.appendChild(header);
+  #createMenuContainer() {
+    this.container.appendChild(this.menuContainer);
+    this.menuContainer.classList.add("menu-container");
   }
 
   #createMenu() {
-    this.container.appendChild(this.menuContainer);
-    this.menuContainer.classList.add("menu-container");
-    this.#createTitle();
+    this.#createMenuHeader();
     this.#createCategory(this.menu);
   }
 
+  #createMenuHeader() {
+    let menuHeaderText = "Menu";
+    let firstHeader = document.createElement("h1");
+    firstHeader.classList.add("menu-title");
+    firstHeader.innerHTML = menuHeaderText;
+    this.menuContainer.appendChild(firstHeader);
+  }
+
   #createMenuNav() {
-    let followDiv = document.createElement("div");
-    followDiv.classList.add("menu-follow-container");
-    this.container.prepend(followDiv);
+    // container
     let navDiv = document.createElement("div");
+    this.menuContainer.prepend(navDiv);
     navDiv.classList.add("menu-nav-container");
-    navDiv.classList.add("hidden");
-    followDiv.prepend(navDiv);
+    // list of menu categories
     let navList = document.createElement("ul");
+    navList.setAttribute("id", "menu_nav_list");
     navList.classList.add("menu-nav-list");
     navDiv.appendChild(navList);
+
     this.#addMenuCategoriesToList(navList);
-    this.#addToggleButtonToMenuNav(followDiv);
-  }
-
-  #addToggleButtonToMenuNav(followDiv) {
-    let navButton = document.createElement("button");
-    navButton.setAttribute("type", "button");
-    navButton.setAttribute("value", "off");
-    navButton.innerHTML = `Menu \xa0\xa0\u25B6`;
-    navButton.classList.add("menu-toggle-btn");
-    navButton.addEventListener("click", this.#toggleMenuNav);
-    followDiv.prepend(navButton);
-  }
-
-  #toggleMenuNav() {
-    let navDiv = document.getElementsByClassName("menu-nav-container")[0];
-    navDiv.classList.toggle("hidden");
-    let navContainer = document.getElementById("nav");
-    navContainer.classList.toggle("dimmed");
-    let navButton = document.getElementsByClassName("menu-toggle-btn")[0];
-    toggleMenuNavButtonValue(navButton);
-    let menuContainer = document.getElementsByClassName("menu-container")[0];
-    menuContainer.classList.toggle("dimmed");
-    function toggleMenuNavButtonValue(navButton) {
-      if (navButton.value === "on") {
-        navButton.value = "off";
-        navButton.innerHTML = `Menu \xa0\xa0\u25B6`;
-      } else {
-        navButton.value = "on";
-        navButton.innerHTML = `Menu \xa0\xa0\u25BC`;
-      }
-    }
+    this.#addToggleButtonToMenuNavContainer(navDiv);
   }
 
   #addMenuCategoriesToList(navList) {
     for (let [categoryName, items] of Object.entries(this.menu)) {
+      // list element for each category in menu
       let listElement = document.createElement("li");
-      listElement.classList.add("menu-nav-item");
+      listElement.classList.add("menu-nav-list-item");
       navList.appendChild(listElement);
-      this.#createAnchorTagForCategory(listElement, categoryName);
+      // anchor tag for each list element
+      let link = document.createElement("a");
+      link.classList.add("menu-nav-list-link");
+      link.innerHTML = categoryName;
+      link.setAttribute("href", `#${categoryName}`);
+      listElement.appendChild(link);
     }
   }
 
-  #createAnchorTagForCategory(listElement, categoryName) {
-    let tag = document.createElement("a");
-    tag.innerHTML = categoryName;
-    tag.setAttribute("href", `#${categoryName}`);
-    tag.classList.add("menu-nav-link");
-    tag.addEventListener("click", this.#toggleMenuNav);
-    listElement.appendChild(tag);
+  #addToggleButtonToMenuNavContainer(navDiv) {
+    let navButton = document.createElement("button");
+    navButton.setAttribute("type", "button");
+    navButton.setAttribute("id", "menu_nav_btn");
+    navButton.innerHTML = `Menu \xa0\xa0\u25B6`;
+    navButton.classList.add("menu-nav-container-toggle-btn");
+    navDiv.prepend(navButton);
+    // Event Listener
+    navButton.addEventListener("click", this.#toggleMenuNavContainer);
   }
 
-  #createCategory(category, isSub = false) {
+  #toggleMenuNavContainer() {
+    // toggle menu nav list with visible class
+    let navList = document.getElementById("menu_nav_list");
+    navList.classList.toggle("visible");
+    // toggle menu and main nav with dimmed
+    let mainNavContainer = document.getElementById("nav");
+    mainNavContainer.classList.toggle("dimmed");
+    let menuContainer = document.getElementsByClassName("menu-container")[0];
+    menuContainer.classList.toggle("dimmed");
+    // toggle button arrow
+    (function toggleMenuNavButton() {
+      let menuNavButton = document.getElementById("menu_nav_btn");
+      if (navList.classList.contains("visible")) {
+        menuNavButton.innerHTML = `Menu \xa0\xa0\u25BC`;
+      } else {
+        menuNavButton.innerHTML = `Menu \xa0\xa0\u25B6`;
+      }
+    })();
+  }
+
+  #createCategory(category, isSubCategory = false) {
     for (let [categoryName, items] of Object.entries(category)) {
+      // create container
       let categoryContainer = document.createElement("div");
       this.menuContainer.appendChild(categoryContainer);
       categoryContainer.classList.add("menu-category-container");
-      this.#createCategoryHeader(categoryName, isSub, categoryContainer);
-      let listContainer = this.#createCategoryListContainer(categoryContainer);
+      // create header
+      this.#createCategoryHeader(
+        categoryName,
+        isSubCategory,
+        categoryContainer
+      );
+      // create list container
+      let listContainer =
+        this.#createAndReturnCategoryListContainer(categoryContainer);
+      // add items to list
       this.#addItemsToList(listContainer, items);
     }
   }
 
-  #createCategoryHeader(title, isSub, categoryContainer) {
-    let header = document.createElement("h2");
-    header.classList.add("menu-category-header");
-    header.setAttribute("id", title);
-    if (isSub) {
+  #createCategoryHeader(title, isSubCategory, categoryContainer) {
+    let header;
+    if (isSubCategory === true) {
+      // create sub category header
       header = document.createElement("h3");
       header.classList.add("menu-sub-category-header");
+    } else {
+      // create main category header
+      header = document.createElement("h2");
+      header.classList.add("menu-category-header");
     }
+    header.setAttribute("id", title);
     header.innerHTML = title;
     categoryContainer.appendChild(header);
   }
 
-  #createCategoryListContainer(categoryContainer) {
+  #createAndReturnCategoryListContainer(categoryContainer) {
+    // create and return container
     let listContainer = document.createElement("div");
     listContainer.classList.add("menu-list-container");
     categoryContainer.appendChild(listContainer);
@@ -473,60 +489,69 @@ export class Menu {
 
   #addItemsToList(listContainer, items) {
     for (let [item, price] of Object.entries(items)) {
+      // create sub category
       if (item === "subCategories") {
         this.#createCategory(items.subCategories, true);
       } else if (item === "description") {
+        // menu category description
         let subCategoryDescriptionP = document.createElement("p");
         subCategoryDescriptionP.classList.add("menu-sub-category-description");
         subCategoryDescriptionP.innerHTML = price;
         listContainer.appendChild(subCategoryDescriptionP);
       } else {
+        // menu item list (item name, item price)
         let list = document.createElement("ul");
         list.classList.add("menu-item-list");
         listContainer.appendChild(list);
+        // menu item
         let listItem = document.createElement("li");
         listItem.classList.add("menu-list-item");
-        list.appendChild(listItem);
         listItem.innerHTML = item;
+        list.appendChild(listItem);
         if (typeof price === "string") {
+          // menu price
           let listPrice = document.createElement("li");
-          list.appendChild(listPrice);
           listPrice.classList.add("menu-item-price");
           listPrice.innerHTML = price;
+          list.appendChild(listPrice);
         } else {
           for (let [option, optionPrice] of Object.entries(price)) {
-            this.#addOptionsToItem(option, optionPrice, list, listItem);
+            if (option === "prix") {
+              // menu item price
+              let listPrice = document.createElement("li");
+              list.appendChild(listPrice);
+              listPrice.classList.add("menu-item-price");
+              listPrice.innerHTML = optionPrice;
+            } else if (option === "description") {
+              // menu item description
+              let itemDescriptionP = document.createElement("p");
+              itemDescriptionP.classList.add("menu-item-description");
+              itemDescriptionP.innerHTML = optionPrice;
+              listItem.appendChild(itemDescriptionP);
+            } else {
+              // menu item options and price
+              this.#addOptionsToItem(option, optionPrice, listItem);
+            }
           }
         }
       }
     }
   }
 
-  #addOptionsToItem(option, optionPrice, list, listItem) {
-    if (option === "prix") {
-      let listPrice = document.createElement("li");
-      list.appendChild(listPrice);
-      listPrice.classList.add("menu-item-price");
-      listPrice.innerHTML = optionPrice;
-      return;
-    }
-    if (option === "description") {
-      let itemDescriptionP = document.createElement("p");
-      itemDescriptionP.classList.add("menu-item-description");
-      itemDescriptionP.innerHTML = optionPrice;
-      listItem.appendChild(itemDescriptionP);
-      return;
-    }
+  #addOptionsToItem(option, optionPrice, listItem) {
+    // option list
     let optionList = document.createElement("ul");
     optionList.classList.add("menu-option-list");
     listItem.appendChild(optionList);
+    // option item
     let optionListItem = document.createElement("li");
     optionListItem.classList.add("menu-option-item");
-    optionList.appendChild(optionListItem);
     optionListItem.innerHTML = option;
+    optionList.appendChild(optionListItem);
+    // option price
     let optionListPrice = document.createElement("li");
     optionListPrice.classList.add("menu-option-price");
-    optionList.appendChild(optionListPrice);
     optionListPrice.innerHTML = optionPrice;
+    optionList.appendChild(optionListPrice);
   }
 }
